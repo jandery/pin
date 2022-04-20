@@ -7,12 +7,12 @@ package se.refur.pin.checksum
 object Luhn : IChecksum {
 
     override fun isValid(value: String): Boolean {
-        val checksum = getChecksum(value.substring(0, value.length-1))
+        val checksum = getChecksumAsInt(value.substring(0, value.length-1))
         val lastCharacter = value.substring(value.length-1, value.length)
         return checksum == Integer.parseInt(lastCharacter)
     }
 
-    override fun getChecksum(value: String): Int {
+    override fun getChecksumAsInt(value: String): Int {
         val checksum: Int = calculateLuhnChecksum(value)
         return (10 - checksum % 10) % 10
     }

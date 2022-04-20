@@ -7,6 +7,10 @@ interface IChecksum {
 
     fun isValid(value: String): Boolean
 
-    fun getChecksum(value: String): Int
+    fun getChecksumAsInt(value: String): Int =
+        throw Exception("Not used")
+
+    fun getChecksumAsChar(value: String): Char =
+        throw Exception("Not used")
 
 }

@@ -6,5 +6,12 @@ package se.refur.pin
 enum class LegalGender {
     FEMALE,
     MALE,
-    UNKNOWN
+    UNKNOWN;
+
+    companion object {
+        fun evenForFemale(char: Char): LegalGender = when {
+            Character.getNumericValue(char) % 2 == 0 -> FEMALE
+            else -> MALE
+        }
+    }
 }
