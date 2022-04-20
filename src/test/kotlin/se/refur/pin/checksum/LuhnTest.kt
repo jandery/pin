@@ -7,7 +7,7 @@ import se.refur.pin.checksum.Luhn
 
 class LuhnTest {
     // SSN from fejk.se
-    private val listOfValidSwedishSsn = listOf(
+    private val listOfValidhSsn = listOf(
         "6605150850", "7902094791", "0202204392", "6310153983", "7908199214",
         "6707225535", "8705138256", "8508017947", "8706278168", "6409213219"
     )
@@ -19,7 +19,7 @@ class LuhnTest {
 
     @Test
     fun testValidListOfSsn() {
-        listOfValidSwedishSsn.forEach {
+        listOfValidhSsn.forEach {
             assertTrue(Luhn.isValid(it))
         }
     }
