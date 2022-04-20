@@ -1,4 +1,4 @@
-package checksum
+package se.refur.pin.checksum
 
 /**
  * The purpose of this

@@ -1,8 +1,9 @@
-package checksum
+package se.refur.pin.checksum
 
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import se.refur.pin.checksum.Luhn
 
 class LuhnTest {
     // SSN from fejk.se
