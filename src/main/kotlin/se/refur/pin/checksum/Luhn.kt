@@ -25,11 +25,3 @@ object Luhn : IChecksum {
         }
             .sum()
 }
-
-fun main() {
-    val str = "abcdef"
-
-    println(str.substring(0, str.length-1))
-    println(str.substring(str.length-1, str.length))
-
-}

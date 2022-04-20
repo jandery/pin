@@ -17,9 +17,11 @@ class SwedishPersonalIdentification(dateOfBirth: LocalDate, control: String) : I
         }
     }
 
-    override val ageInYears: Int = Period.between(dateOfBirth, LocalDate.now()).years
+    override val ageInYears: Int =
+        Period.between(dateOfBirth, LocalDate.now()).years
 
-    override val weekdayOfBirth: DayOfWeek = dateOfBirth.dayOfWeek
+    override val weekdayOfBirth: DayOfWeek =
+        dateOfBirth.dayOfWeek
 
     override val legalGender: LegalGender = when {
         Character.getNumericValue(control[2]) % 2 == 0 -> LegalGender.FEMALE
@@ -32,12 +34,33 @@ class SwedishPersonalIdentification(dateOfBirth: LocalDate, control: String) : I
     override val longFormat: String =
         "${dateOfBirth.toLongFormat()}-$control"
 
-    companion object {
+    companion object : ICreate {
         private val SWEDISH_CONTROL_PATTERN = Pattern.compile("^\\d{4}$")
 
         private fun getSeparator(ageInYears: Int): String = when {
             ageInYears < 100 -> "-"
             else -> "+"
+        }
+
+        /**
+         * Check if a birthdate with control characters are valid
+         */
+        override fun isValid(birthDate: LocalDate, control: String): Boolean =
+            Luhn.isValid("${birthDate.toShortString()}$control")
+
+        /**
+         * Create Personal identification
+         */
+        override fun create(birthDate: LocalDate, control: String): IPersonalIdentification =
+            SwedishPersonalIdentification(birthDate, control)
+
+        /**
+         * Generate a random personal identification
+         */
+        override fun createRandom(dateOfBirth: LocalDate): IPersonalIdentification {
+            val rnd: String = generateRandom(999).toString().padStart(3, '0')
+            val checksum: Int = Luhn.getChecksum("${dateOfBirth.toShortString()}$rnd")
+            return SwedishPersonalIdentification(dateOfBirth, "$rnd$checksum")
         }
     }
 }
