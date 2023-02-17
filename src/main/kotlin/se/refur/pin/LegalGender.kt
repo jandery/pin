@@ -1,7 +1,7 @@
 package se.refur.pin
 
 /**
- * The purpose of this
+ * The purpose of this enum is holding legal genders.
  */
 enum class LegalGender {
     FEMALE,

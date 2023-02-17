@@ -1,14 +1,14 @@
 package se.refur.pin.checksum
 
 /**
- * Calculate the checksum according to
+ * he purpose of this object is to calculate the checksum according to
  * https://en.wikipedia.org/wiki/Luhn_algorithm
  */
 object Luhn : IChecksum {
 
     override fun isValid(value: String): Boolean {
-        val checksum = getChecksumAsInt(value.substring(0, value.length-1))
-        val lastCharacter = value.substring(value.length-1, value.length)
+        val checksum = getChecksumAsInt(value.take(value.length-1))
+        val lastCharacter = value.takeLast(1)
         return checksum == Integer.parseInt(lastCharacter)
     }
 

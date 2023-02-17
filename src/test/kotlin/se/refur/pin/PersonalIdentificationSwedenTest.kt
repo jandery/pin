@@ -62,4 +62,64 @@ class PersonalIdentificationSwedenTest {
         val expected = "19631015-3983"
         Assertions.assertEquals(pin.longFormat, expected) { "${pin.longFormat} is not equal to $expected" }
     }
+
+    @Test
+    fun `isValid _ empty string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ without sign and to short string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515085")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ without sign and to long string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("1966051508500")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ without sign and matching string _ true`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("196605150850")
+        Assertions.assertTrue(actual)
+    }
+
+    @Test
+    fun `isValid _ with minus sign and to short string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515-085")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ with minus sign and to long string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515-08500")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ with minus sign and matching string _ true`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515-0850")
+        Assertions.assertTrue(actual)
+    }
+
+    @Test
+    fun `isValid _ with plus sign and to short string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515+085")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ with plus sign and to long string _ false`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515+08500")
+        Assertions.assertFalse(actual)
+    }
+
+    @Test
+    fun `isValid _ with plus sign and matching string _ true`() {
+        val actual: Boolean = PersonalIdentificationSweden.isValid("19660515+0850")
+        Assertions.assertTrue(actual)
+    }
 }

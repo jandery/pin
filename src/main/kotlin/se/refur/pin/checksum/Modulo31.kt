@@ -1,7 +1,7 @@
 package se.refur.pin.checksum
 
 /**
- * The purpose of this
+ * he purpose of this object is to calculate the checksum according to Modulo31
  */
 object Modulo31 : IChecksum  {
     private val CONTROL_CHARS = listOf(
@@ -11,7 +11,7 @@ object Modulo31 : IChecksum  {
 
 
     override fun isValid(value: String): Boolean = try {
-        val index = value.substring(0, 9).toLong() % 31
+        val index = value.take(9).toLong() % 31
         CONTROL_CHARS[index.toInt()] == value.last()
     } catch (e: Exception) {
         false

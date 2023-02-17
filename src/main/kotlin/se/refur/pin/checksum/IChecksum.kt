@@ -1,7 +1,7 @@
 package se.refur.pin.checksum
 
 /**
- * The purpose of this
+ * The purpose of this interface
  */
 interface IChecksum {
 
