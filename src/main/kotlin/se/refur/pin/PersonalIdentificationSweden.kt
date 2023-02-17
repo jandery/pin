@@ -17,10 +17,10 @@ class PersonalIdentificationSweden(override val dateOfBirth: LocalDate, control:
 
     init {
         if (!CONTROL_PATTERN.matcher(control).matches()) {
-            throw Exception("Invalid control format")
+            throw Exception("Invalid control characters format")
         }
         if (!isValid(dateOfBirth, control)) {
-            throw Exception("Invalid control character")
+            throw Exception("Invalid checksum")
         }
     }
 
@@ -39,6 +39,7 @@ class PersonalIdentificationSweden(override val dateOfBirth: LocalDate, control:
     override val longFormat: String =
         "${dateOfBirth.toLongFormat()}-$control"
 
+
     companion object : ICreate {
         private val CONTROL_PATTERN = Pattern.compile("^\\d{4}$")
 
@@ -48,10 +49,8 @@ class PersonalIdentificationSweden(override val dateOfBirth: LocalDate, control:
         // Valid format for YYYYMMDD-XXXX. Must start with 19 or 20 and followed by 6+4 numeric characters
         private val SSN_PATTERN_SEPARATED_FULL = Pattern.compile("^(19|20)[0-9]{6}(-|\\+)[0-9]{4}$")
 
-        private fun getSeparator(ageInYears: Int): String = when {
-            ageInYears < 100 -> "-"
-            else -> "+"
-        }
+        private fun getSeparator(ageInYears: Int): String =
+            if (ageInYears < 100) "-" else "+"
 
         /**
          * Check if a birthdate with control characters are valid
@@ -81,6 +80,9 @@ class PersonalIdentificationSweden(override val dateOfBirth: LocalDate, control:
         override fun create(birthDate: LocalDate, control: String): IPersonalIdentification =
             PersonalIdentificationSweden(birthDate, control)
 
+        /**
+         * Create personal identification from string
+         */
         override fun create(pin: String): IPersonalIdentification = when {
             SSN_PATTERN_FULL.matcher(pin).matches() ->
                 PersonalIdentificationSweden(pin.toLocalDate(), pin.takeLast(4))
